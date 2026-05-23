@@ -549,11 +549,11 @@ var PLATFORM_ICONS = {
   tiktok: '<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.78a8.18 8.18 0 004.78 1.52V6.85a4.83 4.83 0 01-1.01-.16z"/></svg>'
 };
 var PLATFORM_COLORS = { twitch:'#9147ff', youtube:'#ff0033', tiktok:'#ffffff' };
-var schedule = JSON.parse(localStorage.getItem('mooris-schedule') || 'null') || [
+var DEFAULT_SCHEDULE = [
   {active:false,time:'',platforms:[]},{active:true,time:'18:00',platforms:['twitch']},{active:true,time:'18:00',platforms:['twitch']},
   {active:true,time:'19:00',platforms:['twitch']},{active:false,time:'',platforms:[]},{active:true,time:'15:00',platforms:['twitch']},{active:true,time:'15:00',platforms:['twitch']}
 ];
-// Régi mentések kompatibilitása - platforms mező pótlása
+var schedule = JSON.parse(localStorage.getItem('mooris-schedule') || 'null') || DEFAULT_SCHEDULE;
 schedule = schedule.map(function(d){ return Object.assign({platforms:[]}, d); });
 
 // ── Navigáció ────────────────────────────────────
@@ -597,7 +597,14 @@ function switchStream(to) {
 }
 
 // ── Menetrend ─────────────────────────────────────
-function save(){ localStorage.setItem('mooris-schedule', JSON.stringify(schedule)); }
+function save(){
+  localStorage.setItem('mooris-schedule', JSON.stringify(schedule));
+  fetch('https://mooris-web-default-rtdb.europe-west1.firebasedatabase.app/schedule.json', {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(schedule)
+  }).catch(function(){});
+}
 function renderDisplay(){
   var grid=document.getElementById('schedule-display');
   if(!grid) return;
@@ -839,8 +846,31 @@ function loadYTFeed(){
 }
 
 // ── Init ──────────────────────────────────────────
-renderDisplay();
-checkLive();
+fetch('https://mooris-web-default-rtdb.europe-west1.firebasedatabase.app/schedule.json')
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data && Array.isArray(data)){
+      schedule = data.map(function(d){ return Object.assign({platforms:[]}, d); });
+      localStorage.setItem('mooris-schedule', JSON.stringify(schedule));
+    }
+    renderDisplay();
+    checkLive();
+  })
+  .catch(function(){
+    renderDisplay();
+    checkLive();
+  });
+setInterval(function(){
+  fetch('https://mooris-web-default-rtdb.europe-west1.firebasedatabase.app/schedule.json')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(data && Array.isArray(data)){
+        schedule = data.map(function(d){ return Object.assign({platforms:[]}, d); });
+        renderDisplay();
+        checkLive();
+      }
+    }).catch(function(){});
+}, 30000);
 setInterval(checkLive,60000);
 loadYTFeed();
 
