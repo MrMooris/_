@@ -840,10 +840,6 @@ function loadYTFeed(){
 
 // ── Init ──────────────────────────────────────────
 renderDisplay();
-if(sessionStorage.getItem('mooris-admin')){
-  document.getElementById('admin-panel').classList.add('show');
-  renderEditor();
-}
 checkLive();
 setInterval(checkLive,60000);
 loadYTFeed();
