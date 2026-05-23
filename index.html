@@ -564,11 +564,22 @@ function showSection(id, el) {
   document.querySelectorAll('.nav-links a').forEach(function(a){ a.classList.remove('active'); });
   if (el) el.classList.add('active');
   window.scrollTo(0,0);
+  location.hash = id;
   return false;
 }
 document.querySelectorAll('.nav-links a').forEach(function(a){
   a.addEventListener('click', function(e){ e.preventDefault(); });
 });
+
+// ── Hash alapú navigáció ─────────────────────────
+(function(){
+  var hash = location.hash.replace('#','');
+  var valid = ['about','setup','support','schedule'];
+  if(hash && valid.indexOf(hash) >= 0){
+    var link = document.querySelector('.nav-links a[onclick*="' + hash + '"]');
+    showSection(hash, link);
+  }
+})();
 
 // ── Embed init ───────────────────────────────────
 var host = location.hostname || 'localhost';
