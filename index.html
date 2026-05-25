@@ -160,7 +160,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .live-dot.is-live{animation:pulse 1.4s infinite}
 .live-dot.is-live-twitch{background:var(--twitch);box-shadow:0 0 8px var(--twitch)}
 .live-dot.is-live-youtube{background:var(--red);box-shadow:0 0 8px var(--red)}
-@keyframes bannerBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
 .hero-name-svg-wrap{width:100%;max-width:650px;margin:0 auto 1.5rem}
 .hero-name-svg{width:100%;height:auto;display:block;overflow:visible}
@@ -280,11 +279,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .editor-row input[type="time"]:disabled{opacity:.25;cursor:default}
 
 /* ── LIVE BANNER ─────────────────────────────────── */
-#live-banner{display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(8,8,8,.97);border:1px solid rgba(255,0,51,.35);border-radius:16px;padding:.85rem 1.6rem;z-index:400;gap:12px;align-items:center;backdrop-filter:blur(14px);box-shadow:0 0 30px rgba(255,0,51,.15);white-space:nowrap}
+#live-banner{display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(8,8,8,.97);border:1px solid rgba(255,0,51,.35);border-radius:16px;padding:.85rem 1.2rem;z-index:300;gap:10px;align-items:center;backdrop-filter:blur(14px);box-shadow:0 0 30px rgba(255,0,51,.1)}
 #live-banner.show{display:flex}
 .banner-dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:pulse 1s infinite;flex-shrink:0}
 .banner-text{font-size:13px;font-weight:700;letter-spacing:.02em}
-.banner-link{font-size:12px;font-weight:700;color:#fff;text-decoration:none;margin-left:4px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-shadow:0 0 8px rgba(255,255,255,.8),0 0 16px rgba(255,255,255,.4);animation:bannerBounce 1s ease-in-out infinite}
+.banner-link{font-size:12px;color:#9147ff;text-decoration:none;margin-left:4px;font-family:'Space Mono',monospace}
 .banner-link:hover{text-decoration:underline}
 
 /* ── YOUTUBE CAROUSEL ────────────────────────────── */
@@ -469,7 +468,7 @@ footer span{color:var(--muted)}
 <!-- LIVE BANNER -->
 <div id="live-banner">
   <div class="banner-dot"></div>
-  <span class="banner-text">Mooris LIVE!</span>
+  <span class="banner-text">Mooris most LIVE!</span>
   <a href="#" target="_blank" class="banner-link" id="banner-link">Nézd meg →</a>
 </div>
 
@@ -511,7 +510,7 @@ footer span{color:var(--muted)}
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
           Twitch
         </a>
-        <a href="https://www.youtube.com/@MrMooris" target="_blank" class="btn btn-youtube">
+        <a href="https://www.youtube.com/@MrMooriss" target="_blank" class="btn btn-youtube">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           YouTube
         </a>
@@ -670,8 +669,8 @@ footer span{color:var(--muted)}
 var ADMIN_HASH = 'e21deaf105b8fae0b33e33daf9e36b238ef3fa3f9eacef516c14423a7f107cc6';
 var DAYS        = ['Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat','Vasárnap'];
 var TWITCH_NAME = 'MrMooris_';
-var YT_CHANNEL_ID = 'UCAvWBPJHbhAlEjf1AaH4kpg';
-var YT_HANDLE   = 'MrMooris';          // ← @handle @ nélkül
+var YT_CHANNEL_ID = 'MrMooriss'; // ← YouTube channel ID (UCxxxxxxxxxx)
+var YT_HANDLE   = 'MrMooriss';          // ← @handle @ nélkül
 
 // Melyik platformon streamsz? 'twitch' vagy 'youtube'
 // Ha Twitch-en streamsz: 'twitch', ha YouTube-on: 'youtube'
@@ -856,7 +855,6 @@ function checkLive(){
       ss.textContent='🟣 LIVE – Twitch';
       ss.style.color='#9147ff';
       ss.style.textShadow='0 0 20px rgba(145,71,255,.5)';
-      var spTW=ss.closest('.stat-pill');if(spTW)spTW.classList.add('live-twitch');
     } else if(isYouTube){
       ss.textContent='🔴 LIVE – YouTube';
       ss.style.color='var(--red)';
@@ -1056,16 +1054,14 @@ function fetchFollowers(){
       if(!isNaN(n)) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
     }).catch(function(){});
 
-  // YouTube követők - YouTube Data API v3
-  fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCAvWBPJHbhAlEjf1AaH4kpg&key=AIzaSyDvTcElFNfNCmzw0iI_K1GwgBosrWboA64')
+  // YouTube követők - Social Blade API
+  fetch('https://api.socialcounts.org/youtube-live-subscriber-count/MrMooriss')
     .then(function(r){ return r.json(); })
     .then(function(data){
       var el = document.getElementById('stat-yt-followers');
       if(!el) return;
-      if(data.items && data.items[0]){
-        var n = parseInt(data.items[0].statistics.subscriberCount) || 0;
-        el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
-      }
+      var n = data.est_sub || data.subscribers || 0;
+      if(n > 0) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
     }).catch(function(){});
 }
 
