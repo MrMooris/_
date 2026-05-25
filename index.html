@@ -1056,14 +1056,16 @@ function fetchFollowers(){
       if(!isNaN(n)) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
     }).catch(function(){});
 
-  // YouTube követők - Social Blade API
-  fetch('https://api.socialcounts.org/youtube-live-subscriber-count/UCAvWBPJHbhAlEjf1AaH4kpg')
+  // YouTube követők - YouTube Data API v3
+  fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics&id=UCAvWBPJHbhAlEjf1AaH4kpg&key=AIzaSyDvTcElFNfNCmzw0iI_K1GwgBosrWboA64')
     .then(function(r){ return r.json(); })
     .then(function(data){
       var el = document.getElementById('stat-yt-followers');
       if(!el) return;
-      var n = data.est_sub || data.subscribers || 0;
-      if(n > 0 && n !== 404) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
+      if(data.items && data.items[0]){
+        var n = parseInt(data.items[0].statistics.subscriberCount) || 0;
+        el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
+      }
     }).catch(function(){});
 }
 
