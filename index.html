@@ -197,10 +197,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 /* ── STREAM ─────────────────────────────────────── */
 .stream-wrap{display:grid;grid-template-columns:1fr 320px;gap:0;border:1px solid rgba(255,255,255,0.09);border-radius:16px;overflow:hidden;background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),0 0 60px rgba(0,0,0,.5)}
 @media(max-width:900px){.stream-wrap{grid-template-columns:1fr;grid-template-rows:auto auto}}
-.twitch-player{width:100%;aspect-ratio:16/9}
-.twitch-player iframe{width:100%;height:100%;display:block;border:none}
-.twitch-chat{height:100%;min-height:400px}
-.twitch-chat iframe{width:100%;height:100%;min-height:400px;display:block;border:none}
+.twitch-player{width:100%;aspect-ratio:16/9;position:relative}
+.twitch-player iframe{width:100%;height:100%;display:block;border:none;position:absolute;inset:0}
+.twitch-chat{height:100%;min-height:400px;position:relative}
+.twitch-chat iframe{width:100%;height:100%;min-height:400px;display:block;border:none;position:absolute;inset:0}
+
+/* ── STREAM OFFLINE STATE ────────────────────────── */
+.twitch-chat{border-left:1px solid rgba(255,255,255,0.07)}
+.stream-offline-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0d0d0d}
+.stream-cat-svg{width:200px;height:110px;display:flex;align-items:center;justify-content:center}
+.stream-cat-svg svg{overflow:visible}
+.stream-offline-text{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#444;user-select:none;margin-top:10px;text-align:center}
+@keyframes stream-sweep{from{stroke-dashoffset:350}to{stroke-dashoffset:0}}
+.stream-chat-offline{position:absolute;inset:0;display:flex;flex-direction:column;align-items:stretch;background:#0d0d0d}
+.stream-chat-header{height:40px;flex-shrink:0;display:flex;align-items:center;padding:0 14px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02)}
+.stream-chat-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.stream-chat-offline-label{font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:#333;user-select:none}
 
 /* ── STREAM TABS ─────────────────────────────────── */
 .stream-tabs{display:flex;gap:6px;flex-shrink:0}
@@ -289,25 +301,46 @@ border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
 .banner-link{font-size:12px;font-weight:700;color:#fff;text-decoration:none;margin-left:4px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-shadow:0 0 8px rgba(255,255,255,.8),0 0 16px rgba(255,255,255,.4);animation:bannerBounce 1s ease-in-out infinite}
 .banner-link:hover{text-decoration:underline}
 
-/* ── YOUTUBE CAROUSEL ────────────────────────────── */
+/* ── YOUTUBE CAROUSEL (3D) ───────────────────────── */
 .yt-nav{display:flex;gap:6px}
-.yt-nav-btn{width:36px;height:36px;border-radius:4px;border:1px solid var(--line);background:var(--bg3);color:var(--muted2);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.yt-nav-btn:hover:not(:disabled){color:var(--text);border-color:rgba(255,255,255,.12)}
-.yt-nav-btn:disabled{opacity:.25;cursor:default}
-.yt-carousel-wrap{overflow:hidden;width:100%}
-.yt-carousel{display:flex;gap:1rem;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform}
-.yt-card{flex:0 0 calc(33.333% - .67rem);min-width:0;background:var(--bg3);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--text);transition:border-color .2s,transform .2s;display:block}
-@media(max-width:900px){.yt-card{flex:0 0 calc(50% - .5rem)}}
-@media(max-width:580px){.yt-card{flex:0 0 100%}}
-.yt-card:hover{border-color:rgba(255,0,51,.25);transform:translateY(-3px)}
-.yt-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--bg4)}
+.yt-nav-btn{background:#212121;color:white;border:1px solid rgba(255,255,255,.18);border-radius:8px;width:38px;height:30px;font-size:14px;font-weight:bold;cursor:pointer;display:flex;justify-content:center;align-items:center;transition:all .2s ease}
+.yt-nav-btn:hover{background:#505050;border-color:#ffffff}
+.yt-nav-btn:disabled{opacity:.3;cursor:default}
+.yt-carousel-wrap{width:100%;height:240px;position:relative;overflow:hidden;perspective:1200px;display:flex;justify-content:center;align-items:center}
+.yt-carousel{width:100%;height:100%;position:relative;transform-style:preserve-3d;display:flex;justify-content:center;align-items:center}
+.yt-card{position:absolute;width:300px;height:198px;background:#1a1a1a;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.5);transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1),opacity 0.4s ease,visibility 0.4s;backface-visibility:hidden;transform:translateX(0) translateZ(-300px);opacity:0;visibility:hidden;z-index:0;text-decoration:none;color:var(--text);display:block;overflow:hidden;border:1px solid transparent;cursor:pointer}
+.yt-card.yt-item-1{transform:translateX(-480px) translateZ(-50px);opacity:0.2;visibility:visible;z-index:1}
+.yt-card.yt-item-2{transform:translateX(-318px) translateZ(0px);opacity:1;visibility:visible;z-index:4}
+.yt-card.yt-item-3{transform:translateX(0) translateZ(30px);opacity:1;visibility:visible;z-index:5;border:1px solid rgba(255,255,255,0.9);box-shadow:0 8px 25px rgba(0,0,0,0.5),0 0 15px rgba(255,255,255,0.6)}
+.yt-card.yt-item-4{transform:translateX(318px) translateZ(0px);opacity:1;visibility:visible;z-index:4}
+.yt-card.yt-item-5{transform:translateX(480px) translateZ(-50px);opacity:0.2;visibility:visible;z-index:1}
+.yt-card.yt-item-1 .yt-play-icon,.yt-card.yt-item-5 .yt-play-icon{display:none}
+.yt-card:hover.yt-item-3 .yt-play-icon,.yt-card:hover.yt-item-2 .yt-play-icon,.yt-card:hover.yt-item-4 .yt-play-icon{opacity:1}
+.yt-thumb{width:100%;height:148px;object-fit:cover;display:block;background:var(--bg4)}
 .yt-thumb-wrap{position:relative;overflow:hidden}
-.yt-play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);opacity:0;transition:opacity .2s}
-.yt-card:hover .yt-play-icon{opacity:1}
-.yt-play-icon svg{width:44px;height:44px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
-.yt-info{padding:1rem 1rem .9rem}
-.yt-title{font-size:.9rem;font-weight:700;line-height:1.4;letter-spacing:-.01em;margin-bottom:.35rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.yt-meta{font-size:11px;color:var(--muted2);font-family:'Space Mono',monospace;letter-spacing:.04em}
+.yt-play-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:opacity .2s}
+.yt-play-icon svg{width:38px;height:38px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+.yt-info{padding:.6rem .75rem .5rem}
+.yt-title{font-size:.78rem;font-weight:700;line-height:1.35;letter-spacing:-.01em;margin-bottom:.2rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.yt-meta{font-size:10px;color:var(--muted2);font-family:'Space Mono',monospace;letter-spacing:.04em}
+
+/* skeleton loading cards */
+.yt-card.yt-loading-card{padding:8px;display:flex;flex-direction:column;gap:8px;cursor:default}
+.yt-skeleton-thumb{width:100%;height:135px;background:linear-gradient(90deg,#2c2c2c 25%,#3d3d3d 50%,#2c2c2c 75%);background-size:200% 100%;animation:yt-shimmer 1.5s infinite linear;border-radius:6px}
+.yt-skeleton-text{width:75%;height:14px;background:linear-gradient(90deg,#2c2c2c 25%,#3d3d3d 50%,#2c2c2c 75%);background-size:200% 100%;animation:yt-shimmer 1.5s infinite linear;border-radius:4px}
+@keyframes yt-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* empty state */
+.yt-empty-state{width:100%;height:100%;display:grid;place-items:center;align-content:center;background:#111111;border-radius:12px;gap:10px}
+.yt-cat-svg{width:130px;height:86px;display:flex;justify-content:center;align-items:center}
+.yt-cat-track-base{fill:none;stroke:#222222;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.yt-cat-track-neon{fill:none;stroke:#ffffff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:90 260;filter:drop-shadow(0px 0px 4px rgba(255,255,255,0.8));animation:yt-sweep 6s infinite linear}
+@keyframes yt-sweep{from{stroke-dashoffset:350}to{stroke-dashoffset:0}}
+.yt-cat-dimmed{opacity:0.25}
+.yt-cat-thin{fill:none;stroke:#ffffff;stroke-width:1.2;stroke-linecap:round}
+.yt-cat-fill{fill:#ffffff}
+.yt-empty-text{font-size:9px;color:#555555;font-weight:bold;text-transform:uppercase;letter-spacing:2.5px;user-select:none;text-align:center}
+
 .yt-loading{display:flex;gap:8px;align-items:center;justify-content:center;padding:4rem;width:100%}
 .yt-loading-dot{width:8px;height:8px;border-radius:50%;background:var(--red);opacity:.4}
 .yt-loading-dot:nth-child(1){animation:ld .9s 0s infinite alternate}
@@ -571,16 +604,118 @@ footer span{color:var(--muted)}
       </div>
     </div>
     <div class="stream-wrap" id="stream-wrap-twitch">
-      <div class="twitch-player"><iframe id="twitch-embed" src="" allowfullscreen scrolling="no" frameborder="0"></iframe></div>
-      <div class="twitch-chat"><iframe id="twitch-chat" src="" frameborder="0" scrolling="yes"></iframe></div>
+      <div class="twitch-player" id="twitch-player-wrap">
+        <div class="stream-offline-state" id="twitch-offline">
+          <div class="stream-cat-svg">
+            <svg viewBox="8 30 72 42" width="100%" height="100%" style="overflow:visible">
+              <defs><filter id="so-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter></defs>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.08" filter="url(#so-blur)"/>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#222222" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90 260" style="filter:drop-shadow(0px 0px 4px rgba(255,255,255,0.8));animation:stream-sweep 6s infinite linear"/>
+              <g opacity="0.25">
+                <circle cx="31" cy="51" r="2.2" fill="#ffffff"/><circle cx="44" cy="51" r="2.2" fill="#ffffff"/>
+                <ellipse cx="37.5" cy="53" rx="1.5" ry="1" fill="#ffffff"/>
+                <line x1="17" y1="52" x2="23" y2="52" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="17" y1="56" x2="23" y2="55" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="52" y1="52" x2="58" y2="52" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="52" y1="55" x2="58" y2="56" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="67.5" cy="49" r="0.7" fill="#ffffff"/><circle cx="70.5" cy="47" r="0.7" fill="#ffffff"/>
+                <circle cx="73.5" cy="50" r="0.7" fill="#ffffff"/><circle cx="70.5" cy="52" r="1.3" fill="#ffffff"/>
+              </g>
+            </svg>
+          </div>
+          <div class="stream-offline-text">OFFLINE</div>
+        </div>
+        <iframe id="twitch-embed" src="" allowfullscreen scrolling="no" frameborder="0" style="display:none"></iframe>
+      </div>
+      <div class="twitch-chat" id="twitch-chat-wrap">
+        <div class="stream-chat-offline" id="twitch-chat-offline">
+          <div class="stream-chat-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stream-chat-body">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" width="40" height="40"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="stream-chat-offline-label">Chat Offline</span>
+          </div>
+        </div>
+        <iframe id="twitch-chat" src="" frameborder="0" scrolling="yes" style="display:none"></iframe>
+      </div>
     </div>
     <div class="stream-wrap" id="stream-wrap-youtube" style="display:none">
-      <div class="twitch-player"><iframe id="yt-live-embed" src="" allowfullscreen frameborder="0"></iframe></div>
-      <div class="twitch-chat"><iframe id="yt-chat-embed" src="" frameborder="0" scrolling="yes"></iframe></div>
+      <div class="twitch-player" id="yt-player-wrap">
+        <div class="stream-offline-state" id="yt-offline">
+          <div class="stream-cat-svg">
+            <svg viewBox="8 30 72 42" width="100%" height="100%" style="overflow:visible">
+              <defs><filter id="so-blur-yt" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter></defs>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.08" filter="url(#so-blur-yt)"/>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#222222" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90 260" style="filter:drop-shadow(0px 0px 4px rgba(255,255,255,0.8));animation:stream-sweep 6s infinite linear"/>
+              <g opacity="0.25">
+                <circle cx="31" cy="51" r="2.2" fill="#ffffff"/><circle cx="44" cy="51" r="2.2" fill="#ffffff"/>
+                <ellipse cx="37.5" cy="53" rx="1.5" ry="1" fill="#ffffff"/>
+                <line x1="17" y1="52" x2="23" y2="52" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="17" y1="56" x2="23" y2="55" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="52" y1="52" x2="58" y2="52" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="52" y1="55" x2="58" y2="56" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="67.5" cy="49" r="0.7" fill="#ffffff"/><circle cx="70.5" cy="47" r="0.7" fill="#ffffff"/>
+                <circle cx="73.5" cy="50" r="0.7" fill="#ffffff"/><circle cx="70.5" cy="52" r="1.3" fill="#ffffff"/>
+              </g>
+            </svg>
+          </div>
+          <div class="stream-offline-text">OFFLINE</div>
+        </div>
+        <iframe id="yt-live-embed" src="" allowfullscreen frameborder="0" style="display:none"></iframe>
+      </div>
+      <div class="twitch-chat" id="yt-chat-wrap">
+        <div class="stream-chat-offline" id="yt-chat-offline">
+          <div class="stream-chat-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stream-chat-body">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" width="40" height="40"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="stream-chat-offline-label">Chat Offline</span>
+          </div>
+        </div>
+        <iframe id="yt-chat-embed" src="" frameborder="0" scrolling="yes" style="display:none"></iframe>
+      </div>
     </div>
     <div class="stream-wrap" id="stream-wrap-kick" style="display:none">
-      <div class="twitch-player"><iframe id="kick-embed" src="https://player.kick.com/mrmooriss" allowfullscreen frameborder="0"></iframe></div>
-      <div class="twitch-chat"><iframe id="kick-chat" src="https://kick.com/mrmooriss/chatroom" frameborder="0" scrolling="yes"></iframe></div>
+      <div class="twitch-player">
+        <div class="stream-offline-state" id="kick-offline">
+          <div class="stream-cat-svg">
+            <svg viewBox="8 30 72 42" width="100%" height="100%" style="overflow:visible">
+              <defs><filter id="so-blur-kick" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter></defs>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.08" filter="url(#so-blur-kick)"/>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#222222" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90 260" style="filter:drop-shadow(0px 0px 4px rgba(255,255,255,0.8));animation:stream-sweep 6s infinite linear"/>
+              <g opacity="0.25">
+                <circle cx="31" cy="51" r="2.2" fill="#ffffff"/><circle cx="44" cy="51" r="2.2" fill="#ffffff"/>
+                <ellipse cx="37.5" cy="53" rx="1.5" ry="1" fill="#ffffff"/>
+                <line x1="17" y1="52" x2="23" y2="52" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="17" y1="56" x2="23" y2="55" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="52" y1="52" x2="58" y2="52" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <line x1="52" y1="55" x2="58" y2="56" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="67.5" cy="49" r="0.7" fill="#ffffff"/><circle cx="70.5" cy="47" r="0.7" fill="#ffffff"/>
+                <circle cx="73.5" cy="50" r="0.7" fill="#ffffff"/><circle cx="70.5" cy="52" r="1.3" fill="#ffffff"/>
+              </g>
+            </svg>
+          </div>
+          <div class="stream-offline-text">OFFLINE</div>
+        </div>
+        <iframe id="kick-embed" src="" allowfullscreen frameborder="0" style="display:none"></iframe>
+      </div>
+      <div class="twitch-chat" id="kick-chat-wrap">
+        <div class="stream-chat-offline" id="kick-chat-offline">
+          <div class="stream-chat-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" width="14" height="14"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="stream-chat-body">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" width="40" height="40"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="stream-chat-offline-label">Chat Offline</span>
+          </div>
+        </div>
+        <iframe id="kick-chat" src="" frameborder="0" scrolling="yes" style="display:none"></iframe>
+      </div>
     </div>
   </div>
   <div class="sec-divider"></div>
@@ -593,15 +728,23 @@ footer span{color:var(--muted)}
         <h2 class="section-heading" style="margin-bottom:0">YouTube</h2>
       </div>
       <div class="yt-nav">
-        <button class="yt-nav-btn" id="yt-prev" onclick="ytScroll(-1)" disabled>&#8592;</button>
-        <button class="yt-nav-btn" id="yt-next" onclick="ytScroll(1)">&#8594;</button>
+        <button class="yt-nav-btn" id="yt-prev" onclick="yt3DPrev()">🡨</button>
+        <button class="yt-nav-btn" id="yt-next" onclick="yt3DNext()">🡪</button>
       </div>
     </div>
     <div class="yt-carousel-wrap">
       <div class="yt-carousel" id="yt-carousel">
-        <div class="yt-loading" id="yt-loading">
-          <div class="yt-loading-dot"></div><div class="yt-loading-dot"></div><div class="yt-loading-dot"></div>
-        </div>
+        <!-- Skeleton loading cards (10 db) -->
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
+        <div class="yt-card yt-loading-card"><div class="yt-skeleton-thumb"></div><div class="yt-skeleton-text"></div></div>
       </div>
     </div>
   </div>
@@ -781,6 +924,22 @@ document.getElementById('twitch-embed').src = 'https://player.twitch.tv/?channel
 document.getElementById('twitch-chat').src  = 'https://www.twitch.tv/embed/'+TWITCH_NAME+'/chat?parent='+host+'&darkpopout';
 document.getElementById('yt-live-embed').src = 'https://www.youtube.com/embed?listType=user_uploads&list='+YT_HANDLE+'&autoplay=0';
 document.getElementById('yt-chat-embed').src = 'https://www.youtube.com/live_chat?channel='+YT_CHANNEL_ID+'&embed_domain='+host;
+document.getElementById('kick-embed').src = 'https://player.kick.com/mrmooriss';
+document.getElementById('kick-chat').src = 'https://kick.com/mrmooriss/chatroom';
+
+function setStreamLive(platform, isLive) {
+  var pairs = {
+    twitch:  { player: 'twitch-embed',   offline: 'twitch-offline',    chat: 'twitch-chat',    chatOffline: 'twitch-chat-offline' },
+    youtube: { player: 'yt-live-embed',  offline: 'yt-offline',        chat: 'yt-chat-embed',  chatOffline: 'yt-chat-offline' },
+    kick:    { player: 'kick-embed',     offline: 'kick-offline',       chat: 'kick-chat',      chatOffline: 'kick-chat-offline' }
+  };
+  var p = pairs[platform];
+  if (!p) return;
+  document.getElementById(p.player).style.display      = isLive ? '' : 'none';
+  document.getElementById(p.offline).style.display     = isLive ? 'none' : '';
+  document.getElementById(p.chat).style.display        = isLive ? '' : 'none';
+  document.getElementById(p.chatOffline).style.display = isLive ? 'none' : '';
+}
 
 // ── Stream váltó ──────────────────────────────────
 var currentStream = 'twitch';
@@ -952,6 +1111,11 @@ function checkLive(){
   // Twitch gomb villogás
   var tb=document.getElementById('twitch-btn');
   if(tb) tb.classList.toggle('is-live',isTwitch);
+
+  // Stream offline/live state frissítés
+  setStreamLive('twitch',  isTwitch);
+  setStreamLive('youtube', isYouTube);
+  setStreamLive('kick',    isLive && LIVE_PLATFORM==='kick');
 }
 
 // ── Admin ─────────────────────────────────────────
@@ -993,8 +1157,10 @@ document.getElementById('footer-trigger').addEventListener('click',function(){
 });
 document.getElementById('admin-overlay').addEventListener('click',function(e){ if(e.target===this) closeAdmin(); });
 
-// ── YouTube RSS carousel ──────────────────────────
-var ytVideos=[],ytIndex=0,ytPerPage=3;
+// ── YouTube RSS carousel (3D perspective) ────────
+var ytVideos=[];
+var yt3DPositions=['yt-item-1','yt-item-2','yt-item-3','yt-item-4','yt-item-5','','','','',''];
+
 function relTime(dateStr){
   var d=new Date(dateStr),now=new Date(),diff=Math.floor((now-d)/1000);
   if(diff<3600)  return Math.floor(diff/60)+' perce';
@@ -1003,38 +1169,52 @@ function relTime(dateStr){
   if(diff<2592000) return Math.floor(diff/604800)+' hete';
   return Math.floor(diff/2592000)+' hónapja';
 }
+
+function yt3DUpdateCarousel(){
+  var cards=document.querySelectorAll('#yt-carousel .yt-card');
+  cards.forEach(function(card,index){
+    card.classList.remove('yt-item-1','yt-item-2','yt-item-3','yt-item-4','yt-item-5');
+    if(yt3DPositions[index]) card.classList.add(yt3DPositions[index]);
+  });
+}
+
+function yt3DNext(){
+  var last=yt3DPositions.pop();
+  yt3DPositions.unshift(last);
+  yt3DUpdateCarousel();
+}
+function yt3DPrev(){
+  var first=yt3DPositions.shift();
+  yt3DPositions.push(first);
+  yt3DUpdateCarousel();
+}
+
+var emptyCardSVG='<div class="yt-empty-state"><div class="yt-cat-svg"><svg viewBox="8 30 72 42" width="100%" height="100%" style="overflow:visible"><defs><filter id="mist-blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5"/></filter></defs><path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.08" filter="url(#mist-blur2)"/><path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" class="yt-cat-track-base"/><path d="M 15,65 L 15,48 C 15,40 17,35 21,35 L 26,45 C 33,42 42,42 49,45 L 54,35 C 58,35 60,40 60,48 L 60,56 C 62.5,50 67,42 72,45 C 76,47 75,55 72,65" class="yt-cat-track-neon"/><g class="yt-cat-dimmed"><circle cx="31" cy="51" r="2.2" class="yt-cat-fill"/><circle cx="44" cy="51" r="2.2" class="yt-cat-fill"/><ellipse cx="37.5" cy="53" rx="1.5" ry="1" class="yt-cat-fill"/><line x1="17" y1="52" x2="23" y2="52" class="yt-cat-thin"/><line x1="17" y1="56" x2="23" y2="55" class="yt-cat-thin"/><line x1="52" y1="52" x2="58" y2="52" class="yt-cat-thin"/><line x1="52" y1="55" x2="58" y2="56" class="yt-cat-thin"/><circle cx="67.5" cy="49" r="0.7" class="yt-cat-fill"/><circle cx="70.5" cy="47" r="0.7" class="yt-cat-fill"/><circle cx="73.5" cy="50" r="0.7" class="yt-cat-fill"/><circle cx="70.5" cy="52" r="1.3" class="yt-cat-fill"/></g></svg></div><div class="yt-empty-text">Feltöltés alatt</div></div>';
+
 function buildCards(){
   var carousel=document.getElementById('yt-carousel');
+  // Remove skeleton cards
   carousel.innerHTML='';
-  if(!ytVideos.length){
-    carousel.innerHTML='<div style="padding:3rem;color:var(--muted2);font-size:13px;font-family:\'Space Mono\',monospace">Nem sikerült betölteni a videókat.<br>Ellenőrizd a YouTube Channel ID-t a kódban.</div>';
-    return;
-  }
-  ytVideos.forEach(function(v){
-    var a=document.createElement('a');
-    a.className='yt-card';
-    a.href='https://www.youtube.com/watch?v='+v.id;
-    a.target='_blank';
-    a.innerHTML='<div class="yt-thumb-wrap"><img class="yt-thumb" src="https://i.ytimg.com/vi/'+v.id+'/mqdefault.jpg" alt="" loading="lazy"><div class="yt-play-icon"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div><div class="yt-info"><div class="yt-title">'+v.title+'</div><div class="yt-meta">'+relTime(v.published)+'</div></div>';
-    carousel.appendChild(a);
+  yt3DPositions=['yt-item-1','yt-item-2','yt-item-3','yt-item-4','yt-item-5','','','','',''];
+  
+  // Pad to 10 cards
+  while(ytVideos.length<10) ytVideos.push(null);
+  
+  ytVideos.slice(0,10).forEach(function(v,index){
+    var card=document.createElement(v?'a':'div');
+    card.className='yt-card';
+    if(v){
+      card.href='https://www.youtube.com/watch?v='+v.id;
+      card.target='_blank';
+      card.innerHTML='<div class="yt-thumb-wrap"><img class="yt-thumb" src="https://i.ytimg.com/vi/'+v.id+'/mqdefault.jpg" alt="" loading="lazy"><div class="yt-play-icon"><svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div><div class="yt-info"><div class="yt-title">'+v.title+'</div><div class="yt-meta">'+relTime(v.published)+'</div></div>';
+    } else {
+      card.innerHTML=emptyCardSVG;
+    }
+    carousel.appendChild(card);
   });
-  updateCarousel();
+  yt3DUpdateCarousel();
 }
-function updateCarousel(){
-  var carousel=document.getElementById('yt-carousel');
-  var cards=carousel.querySelectorAll('.yt-card');
-  if(!cards.length) return;
-  var w=cards[0].offsetWidth+16;
-  carousel.style.transform='translateX(-'+(ytIndex*w)+'px)';
-  document.getElementById('yt-prev').disabled=ytIndex===0;
-  document.getElementById('yt-next').disabled=ytIndex>=ytVideos.length-ytPerPage;
-}
-function ytScroll(dir){
-  var max=Math.max(0,ytVideos.length-ytPerPage);
-  ytIndex=Math.max(0,Math.min(max,ytIndex+dir));
-  updateCarousel();
-}
-window.addEventListener('resize',function(){ytIndex=0;updateCarousel();});
+
 function loadYTFeed(){
   var rssUrl='https://www.youtube.com/feeds/videos.xml?channel_id='+YT_CHANNEL_ID;
   var proxyUrl='https://api.allorigins.win/get?url='+encodeURIComponent(rssUrl);
@@ -1052,14 +1232,11 @@ function loadYTFeed(){
         var published=e.querySelector('published');
         if(vid&&title) ytVideos.push({id:vid.textContent,title:title.textContent,published:published?published.textContent:''});
       });
-      var loader=document.getElementById('yt-loading');
-      if(loader) loader.remove();
       buildCards();
     })
     .catch(function(){
-      var loader=document.getElementById('yt-loading');
-      if(loader) loader.remove();
-      document.getElementById('yt-carousel').innerHTML='<div style="padding:3rem;color:var(--muted2);font-size:13px;font-family:\'Space Mono\',monospace">Nem sikerült betölteni a videókat.<br>Ellenőrizd a YouTube Channel ID-t a kódban.</div>';
+      ytVideos=[];
+      buildCards();
     });
 }
 
@@ -1146,6 +1323,8 @@ fetchCurrentGame();
 fetchFollowers();
 setInterval(fetchCurrentGame, 60000);
 setInterval(fetchFollowers, 300000);
+// Initialize skeleton cards with 3D positions before feed loads
+yt3DUpdateCarousel();
 loadYTFeed();
 
 
