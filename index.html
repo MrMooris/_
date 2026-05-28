@@ -57,9 +57,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .stat-pill-twitch .stat-pill-icon{color:#9147ff;filter:drop-shadow(0 0 6px rgba(145,71,255,.8))}
 .stat-pill-twitch{border-color:#2a1a44;box-shadow:0 0 8px rgba(145,71,255,.15),0 0 1px rgba(145,71,255,.3)}
 .stat-pill-twitch:hover{border-color:#5030aa;box-shadow:0 0 14px rgba(145,71,255,.3);transform:translateY(-2px)}
-.stat-pill-youtube .stat-pill-icon{color:#ff0033;filter:drop-shadow(0 0 6px rgba(255,0,51,.8))}
-.stat-pill-youtube{border-color:#3a0a10;box-shadow:0 0 8px rgba(255,0,51,.12),0 0 1px rgba(255,0,51,.25)}
-.stat-pill-youtube:hover{border-color:#aa0022;box-shadow:0 0 14px rgba(255,0,51,.25);transform:translateY(-2px)}
+.stat-pill-kick .stat-pill-icon{color:#53fc18;background:#1a3a0d}
+.stat-pill-kick{border-color:#1a3a0a;box-shadow:0 0 8px rgba(83,252,24,.1),0 0 1px rgba(83,252,24,.2)}
+.stat-pill-kick:hover{border-color:#2a6a10;box-shadow:0 0 14px rgba(83,252,24,.25);transform:translateY(-2px)}
 .stat-pill-game .stat-pill-icon{color:#aaa;filter:drop-shadow(0 0 5px rgba(255,255,255,.5))}
 .stat-pill-game{border-color:#2a2a2a;box-shadow:0 0 8px rgba(255,255,255,.05)}
 .stat-pill-game:hover{border-color:#444;box-shadow:0 0 12px rgba(255,255,255,.1);transform:translateY(-2px)}
@@ -160,6 +160,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .live-dot.is-live{animation:pulse 1.4s infinite}
 .live-dot.is-live-twitch{background:var(--twitch);box-shadow:0 0 8px var(--twitch)}
 .live-dot.is-live-youtube{background:var(--red);box-shadow:0 0 8px var(--red)}
+@keyframes bannerBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
 .hero-name-svg-wrap{width:100%;max-width:650px;margin:0 auto 1.5rem}
 .hero-name-svg{width:100%;height:auto;display:block;overflow:visible}
@@ -175,8 +176,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .btn-twitch:hover{box-shadow:0 6px 24px rgba(145,71,255,.35)}
 .btn-youtube{background:rgba(255,34,68,0.85);backdrop-filter:blur(8px);color:#fff;box-shadow:0 0 0 1px rgba(255,34,68,.4),inset 0 1px 0 rgba(255,255,255,.15)}
 .btn-youtube:hover{box-shadow:0 6px 24px rgba(255,0,51,.4)}
-.btn-kick{background:#53fc18;color:#000;box-shadow:0 0 0 1px rgba(83,252,24,.3)}
-.btn-kick:hover{box-shadow:0 6px 24px rgba(83,252,24,.35)}
+.btn-kick{background:#1a3a0d;color:#53fc18;box-shadow:0 0 0 1px rgba(83,252,24,.3),inset 0 1px 0 rgba(83,252,24,.1)}
+.btn-kick:hover{background:#224d10;box-shadow:0 0 16px rgba(83,252,24,.25)}
 .btn-tiktok{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);color:#fff;border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
 .btn-tiktok:hover{background:rgba(255,255,255,0.13);box-shadow:0 6px 24px rgba(255,255,255,.1)}
 .btn-twitch.is-live svg{animation:logo-blink .9s infinite}
@@ -206,7 +207,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .stab{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg3);color:var(--muted2);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s}
 .stab:hover{color:var(--text);border-color:rgba(255,255,255,.12)}
 .stab.active-twitch{background:var(--twitch);color:#fff;border-color:var(--twitch);box-shadow:0 0 16px rgba(145,71,255,.25)}
-.stab.active-youtube{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
+.stab.active-youtube{background:var(--red);color:#fff;
+.stab.active-kick{background:#53fc18;color:#000;border-color:#53fc18;box-shadow:0 0 16px rgba(83,252,24,.3)}
+border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
 
 /* ── RÓLAM ──────────────────────────────────────── */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
@@ -230,7 +233,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .setup-detail{font-size:12px;color:var(--muted2);letter-spacing:.02em}
 
 /* ── TÁMOGATÁS ──────────────────────────────────── */
-.support-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:2.5rem}
+.support-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:2.5rem;overflow:visible}
 .support-card{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:1.75rem;text-decoration:none;color:var(--text);display:flex;flex-direction:column;align-items:flex-start;gap:.6rem;transition:transform .2s,border-color .25s,box-shadow .25s,background .25s;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.07),0 4px 20px rgba(0,0,0,0.2)}
 .support-card::before{content:'';position:absolute;top:0;left:0;width:3px;bottom:0;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .2s}
 .support-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);box-shadow:inset 0 1px 0 rgba(255,255,255,0.14),0 12px 40px rgba(0,0,0,0.4)}
@@ -279,11 +282,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .editor-row input[type="time"]:disabled{opacity:.25;cursor:default}
 
 /* ── LIVE BANNER ─────────────────────────────────── */
-#live-banner{display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:rgba(8,8,8,.97);border:1px solid rgba(255,0,51,.35);border-radius:16px;padding:.85rem 1.2rem;z-index:300;gap:10px;align-items:center;backdrop-filter:blur(14px);box-shadow:0 0 30px rgba(255,0,51,.1)}
+#live-banner{display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(8,8,8,.97);border:1px solid rgba(255,0,51,.35);border-radius:16px;padding:.85rem 1.6rem;z-index:400;gap:12px;align-items:center;backdrop-filter:blur(14px);box-shadow:0 0 30px rgba(255,0,51,.15);white-space:nowrap}
 #live-banner.show{display:flex}
 .banner-dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:pulse 1s infinite;flex-shrink:0}
 .banner-text{font-size:13px;font-weight:700;letter-spacing:.02em}
-.banner-link{font-size:12px;color:#9147ff;text-decoration:none;margin-left:4px;font-family:'Space Mono',monospace}
+.banner-link{font-size:12px;font-weight:700;color:#fff;text-decoration:none;margin-left:4px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-shadow:0 0 8px rgba(255,255,255,.8),0 0 16px rgba(255,255,255,.4);animation:bannerBounce 1s ease-in-out infinite}
 .banner-link:hover{text-decoration:underline}
 
 /* ── YOUTUBE CAROUSEL ────────────────────────────── */
@@ -333,9 +336,9 @@ footer span{color:var(--muted)}
 .day-pl-tiktok{color:rgba(255,255,255,.7)}
 
 /* ── HEART BUTTON ───────────────────────────────── */
-#heart-btn{background:none;border:none;cursor:pointer;font-size:1.4rem;color:#fff;transition:color .2s,transform .15s;padding:0 2px;line-height:1;vertical-align:middle;display:inline-block}
+#heart-btn{background:none;border:none;cursor:pointer;font-size:1.4rem;transition:filter .2s,transform .15s;padding:0 2px;line-height:1;vertical-align:middle;display:inline-block;filter:grayscale(1) brightness(.6);position:relative;top:-2px}
 #heart-btn:hover{transform:scale(1.2)}
-#heart-btn.liked{color:#ff2244;animation:heartpop .3s ease}
+#heart-btn.liked{filter:grayscale(0) brightness(1.2);animation:heartpop .3s ease}
 @keyframes heartpop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
 
 /* ── SUPPORT FLOAT BTN ──────────────────────────── */
@@ -400,6 +403,21 @@ footer span{color:var(--muted)}
 @keyframes loaderPop{from{transform:scale(0.6);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes loaderFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes loaderProgress{from{width:0}to{width:100%}}
+
+/* ── SUPPORT POPUPS ─────────────────────────────── */
+.support-card{position:relative}
+.support-popup{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) scale(.95);transform-origin:bottom center;background:rgba(12,12,16,.98);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:1rem 1.2rem;min-width:220px;opacity:0;visibility:hidden;transition:opacity .2s,transform .2s;pointer-events:none;z-index:500;box-shadow:0 8px 32px rgba(0,0,0,.8)}
+.support-card:hover .support-popup{opacity:1;visibility:visible;transform:translateX(-50%) scale(1);pointer-events:auto}
+.support-popup.open{opacity:1;visibility:visible;transform:translateX(-50%) scale(1);pointer-events:auto}
+.support-popup::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:rgba(255,255,255,.1)}
+.popup-title{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;font-family:'Space Mono',monospace}
+.popup-emotes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:.5rem}
+.popup-emote{width:36px;height:36px;border-radius:8px;background:rgba(145,71,255,.1);border:1px solid rgba(145,71,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.popup-note{font-size:10px;color:var(--muted2);line-height:1.4}
+.popup-platforms{display:flex;flex-direction:column;gap:8px}
+.popup-platform-link{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);text-decoration:none;color:var(--text);font-size:11px;font-weight:600;transition:background .15s}
+.popup-platform-link:hover{background:rgba(255,255,255,.09)}
+.popup-platform-link svg{flex-shrink:0}
 </style>
 </head>
 <body>
@@ -433,15 +451,15 @@ footer span{color:var(--muted)}
     </div>
   </div>
 
-  <div class="stat-pill stat-pill-youtube">
+  <a href="https://kick.com/mrmooriss" target="_blank" class="stat-pill stat-pill-kick" style="text-decoration:none;">
     <div class="stat-pill-icon">
-      <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M2 2v20h4v-6l2 2 6 4h5l-8-8 8-8h-5l-6 4-2 2V2H2z"/></svg>
     </div>
     <div class="stat-pill-body">
-      <div class="stat-pill-val" id="stat-yt-followers">–</div>
-      <div class="stat-pill-key">YouTube Követő</div>
+      <div class="stat-pill-val" id="stat-kick-followers">–</div>
+      <div class="stat-pill-key">Kick Követő</div>
     </div>
-  </div>
+  </a>
 
   <div class="stat-pill stat-pill-status">
     <div class="stat-pill-icon" id="stat-icon-status">
@@ -468,7 +486,7 @@ footer span{color:var(--muted)}
 <!-- LIVE BANNER -->
 <div id="live-banner">
   <div class="banner-dot"></div>
-  <span class="banner-text">Mooris most LIVE!</span>
+  <span class="banner-text">Mooris LIVE!</span>
   <a href="#" target="_blank" class="banner-link" id="banner-link">Nézd meg →</a>
 </div>
 
@@ -510,13 +528,17 @@ footer span{color:var(--muted)}
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
           Twitch
         </a>
-        <a href="https://www.youtube.com/@MrMooriss" target="_blank" class="btn btn-youtube">
+        <a href="https://www.youtube.com/@MrMooris" target="_blank" class="btn btn-youtube">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           YouTube
         </a>
         <a href="https://www.tiktok.com/@mooris__" target="_blank" class="btn btn-tiktok">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.78a8.18 8.18 0 004.78 1.52V6.85a4.83 4.83 0 01-1.01-.16z"/></svg>
           TikTok
+        </a>
+        <a href="https://kick.com/mrmooriss" target="_blank" class="btn btn-kick">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 2v20h4v-6l2 2 6 4h5l-8-8 8-8h-5l-6 4-2 2V2H2z"/></svg>
+          Kick
         </a>
       </div>
       <div class="hero-avatar-wrap">
@@ -542,6 +564,10 @@ footer span{color:var(--muted)}
           <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           YouTube
         </button>
+        <button class="stab" id="tab-kick" onclick="switchStream('kick')">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M2 2v20h4v-6l2 2 6 4h5l-8-8 8-8h-5l-6 4-2 2V2H2z"/></svg>
+          Kick
+        </button>
       </div>
     </div>
     <div class="stream-wrap" id="stream-wrap-twitch">
@@ -551,6 +577,10 @@ footer span{color:var(--muted)}
     <div class="stream-wrap" id="stream-wrap-youtube" style="display:none">
       <div class="twitch-player"><iframe id="yt-live-embed" src="" allowfullscreen frameborder="0"></iframe></div>
       <div class="twitch-chat"><iframe id="yt-chat-embed" src="" frameborder="0" scrolling="yes"></iframe></div>
+    </div>
+    <div class="stream-wrap" id="stream-wrap-kick" style="display:none">
+      <div class="twitch-player"><iframe id="kick-embed" src="https://player.kick.com/mrmooriss" allowfullscreen frameborder="0"></iframe></div>
+      <div class="twitch-chat"><iframe id="kick-chat" src="https://kick.com/mrmooriss/chatroom" frameborder="0" scrolling="yes"></iframe></div>
     </div>
   </div>
   <div class="sec-divider"></div>
@@ -586,7 +616,7 @@ footer span{color:var(--muted)}
         <h2 class="section-heading">Üdv, Mooris vagyok</h2>
         <p class="about-text">Szeretek horror gamekkel játszani, autós játékokat tolni, vagy csak idegileg bombázni magam CS2-vel és egyéb jó játékokkal, plusz chilles, nyugis címekkel streamelni.</p>
         <p class="about-text">Ha kedveled a laza, baráti streameket, akkor jó helyen jársz!</p>
-        <p class="about-text">Köszönöm, hogy benéztél <button id="heart-btn" onclick="toggleHeart(this)" title="Köszönöm!">♡</button></p>
+        <p class="about-text">Köszönöm, hogy benéztél <button id="heart-btn" onclick="toggleHeart(this)" title="Köszönöm!">👑</button></p>
 
       </div>
       <div style="display:flex;justify-content:center;align-items:center">
@@ -626,21 +656,52 @@ footer span{color:var(--muted)}
     <p class="section-eyebrow">Támogatás</p>
     <h2 class="section-heading">Támogass!</h2>
     <div class="support-grid">
-      <a href="https://www.twitch.tv/MrMooris_/subscribe" target="_blank" class="support-card">
+      <a href="https://www.twitch.tv/MrMooris_/subscribe" target="_blank" class="support-card" onclick="togglePopup(event,'popup-twitch')">
         <div class="support-icon"><svg viewBox="0 0 24 24" fill="#9147ff"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg></div>
-        <div class="support-name">Twitch Sub</div>
-        <div class="support-desc">Iratkozz fel a csatornámra és támogass havonta!</div>
+        <div class="support-name">Twitch Feliratkozás</div>
+        <div class="support-desc">Twitch sub-bal egyedi emotokat és badge-et kapsz.</div>
+        <div class="support-popup" id="popup-twitch">
+          <div class="popup-title">Sub előnyök</div>
+          <div class="popup-emotes">
+            <div class="popup-emote">😸</div>
+            <div class="popup-emote">🎮</div>
+            <div class="popup-emote">👑</div>
+            <div class="popup-emote">⚔️</div>
+          </div>
+          <div class="popup-note">Egyedi emote-ok, exkluzív sub badge, ad-mentes nézés és közvetlen csatorna támogatás.</div>
+        </div>
       </a>
-      <a href="https://streamlabs.com/MrMooris_/tip" target="_blank" class="support-card">
-        <div class="support-icon"><svg viewBox="0 0 24 24" fill="var(--red)" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
-        <div class="support-name">Adomány</div>
-        <div class="support-desc">Küldj donationt Streamlabs-on keresztül!</div>
+      <a href="https://ko-fi.com/mooris" target="_blank" class="support-card">
+        <div class="support-icon"><svg viewBox="0 0 24 24" fill="#FF5E5B" width="22" height="22"><path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"/></svg></div>
+        <div class="support-name">Ko-fi Donation</div>
+        <div class="support-desc">Ha tetszik amit csinálok, egy Ko-fi sokat segít — jobb mikrofon, jobb setup, jobb stream.</div>
       </a>
-      <a href="https://www.tiktok.com/@mooris__" target="_blank" class="support-card">
-        <div class="support-icon"><svg viewBox="0 0 24 24" fill="#ff0050"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.78a8.18 8.18 0 004.78 1.52V6.85a4.83 4.83 0 01-1.01-.16z"/></svg></div>
-        <div class="support-name">TikTok Gift</div>
-        <div class="support-desc">Küldj giftet TikTok live-on!</div>
-      </a>
+            <div class="support-card" style="cursor:pointer" onclick="togglePopup(event,'popup-follow')">
+        <div class="support-icon"><svg viewBox="0 0 24 24" fill="#ffffff" width="22" height="22"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+        <div class="support-name">Követés & Megosztás</div>
+        <div class="support-desc">Kövess minden platformon vagy ahol csak szeretnéd, és ha van egy barátod akinek tetszene — küldd el a linket!</div>
+        <div class="support-popup" id="popup-follow">
+          <div class="popup-title">Platformok</div>
+          <div class="popup-platforms">
+            <a href="https://www.twitch.tv/MrMooris_" target="_blank" class="popup-platform-link">
+              <svg viewBox="0 0 24 24" fill="#9147ff" width="16" height="16"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+              twitch.tv/MrMooris_
+            </a>
+            <a href="https://www.youtube.com/@MrMooris" target="_blank" class="popup-platform-link">
+              <svg viewBox="0 0 24 24" fill="#ff0033" width="16" height="16"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              youtube.com/@MrMooris
+            </a>
+            <a href="https://kick.com/mrmooriss" target="_blank" class="popup-platform-link">
+              <svg viewBox="0 0 24 24" fill="#53fc18" width="16" height="16"><path d="M2 2v20h4v-6l2 2 6 4h5l-8-8 8-8h-5l-6 4-2 2V2H2z"/></svg>
+              kick.com/mrmooriss
+            </a>
+            <a href="https://www.tiktok.com/@mooris__" target="_blank" class="popup-platform-link">
+              <svg viewBox="0 0 24 24" fill="#ffffff" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.78a8.18 8.18 0 004.78 1.52V6.85a4.83 4.83 0 01-1.01-.16z"/></svg>
+              tiktok.com/@mooris__
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -669,8 +730,8 @@ footer span{color:var(--muted)}
 var ADMIN_HASH = 'e21deaf105b8fae0b33e33daf9e36b238ef3fa3f9eacef516c14423a7f107cc6';
 var DAYS        = ['Hétfő','Kedd','Szerda','Csütörtök','Péntek','Szombat','Vasárnap'];
 var TWITCH_NAME = 'MrMooris_';
-var YT_CHANNEL_ID = 'MrMooriss'; // ← YouTube channel ID (UCxxxxxxxxxx)
-var YT_HANDLE   = 'MrMooriss';          // ← @handle @ nélkül
+var YT_CHANNEL_ID = 'UCAvWBPJHbhAlEjf1AaH4kpg';
+var YT_HANDLE   = 'MrMooris';          // ← @handle @ nélkül
 
 // Melyik platformon streamsz? 'twitch' vagy 'youtube'
 // Ha Twitch-en streamsz: 'twitch', ha YouTube-on: 'youtube'
@@ -727,16 +788,18 @@ function switchStream(to) {
   currentStream = to;
   var wt=document.getElementById('stream-wrap-twitch');
   var wy=document.getElementById('stream-wrap-youtube');
+  var wk=document.getElementById('stream-wrap-kick');
   var tt=document.getElementById('tab-twitch');
   var ty=document.getElementById('tab-youtube');
-  tt.classList.remove('active-twitch','active-youtube');
-  ty.classList.remove('active-twitch','active-youtube');
+  var tk=document.getElementById('tab-kick');
+  [tt,ty,tk].forEach(function(t){if(t)t.classList.remove('active-twitch','active-youtube','active-kick');});
+  wt.style.display='none'; wy.style.display='none'; if(wk)wk.style.display='none';
   if(to==='twitch'){
-    wt.style.display=''; wy.style.display='none';
-    tt.classList.add('active-twitch');
+    wt.style.display=''; tt.classList.add('active-twitch');
+  } else if(to==='kick'){
+    if(wk)wk.style.display=''; if(tk)tk.classList.add('active-kick');
   } else {
-    wt.style.display='none'; wy.style.display='';
-    ty.classList.add('active-youtube');
+    wy.style.display=''; ty.classList.add('active-youtube');
   }
 }
 
@@ -855,6 +918,7 @@ function checkLive(){
       ss.textContent='🟣 LIVE – Twitch';
       ss.style.color='#9147ff';
       ss.style.textShadow='0 0 20px rgba(145,71,255,.5)';
+      var spTW=ss.closest('.stat-pill');if(spTW)spTW.classList.add('live-twitch');
     } else if(isYouTube){
       ss.textContent='🔴 LIVE – YouTube';
       ss.style.color='var(--red)';
@@ -1054,14 +1118,27 @@ function fetchFollowers(){
       if(!isNaN(n)) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
     }).catch(function(){});
 
-  // YouTube követők - Social Blade API
-  fetch('https://api.socialcounts.org/youtube-live-subscriber-count/MrMooriss')
+
+  // Kick követők
+  fetch('https://kick.com/api/v2/channels/mrmooriss')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var el = document.getElementById('stat-kick-followers');
+      if(!el) return;
+      var n = d.followers_count || 0;
+      el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
+    }).catch(function(){});
+
+  // YouTube követők - YouTube Data API v3
+  fetch('')
     .then(function(r){ return r.json(); })
     .then(function(data){
       var el = document.getElementById('stat-yt-followers');
       if(!el) return;
-      var n = data.est_sub || data.subscribers || 0;
-      if(n > 0) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
+      if(data.items && data.items[0]){
+        var n = parseInt(data.items[0].statistics.subscriberCount) || 0;
+        el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'K' : n;
+      }
     }).catch(function(){});
 }
 
@@ -1148,9 +1225,23 @@ function closeWelcome(){
   }
 })();
 
+
+function togglePopup(e, id){
+  e.preventDefault();
+  var popup = document.getElementById(id);
+  if(!popup) return;
+  var isOpen = popup.classList.contains('open');
+  document.querySelectorAll('.support-popup').forEach(function(p){ p.classList.remove('open'); });
+  if(!isOpen) popup.classList.add('open');
+}
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.support-card')){
+    document.querySelectorAll('.support-popup').forEach(function(p){ p.classList.remove('open'); });
+  }
+});
+
 function toggleHeart(btn){
   btn.classList.toggle('liked');
-  btn.textContent = btn.classList.contains('liked') ? '♥' : '♡';
 }
 </script>
 
