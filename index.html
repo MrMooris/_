@@ -35,8 +35,10 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .nav-logo{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
 .nav-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s,box-shadow .3s}
 .nav-logo-dot.is-live{animation:pulse 1.6s ease-in-out infinite}
-.nav-logo-dot.is-live-twitch{background:var(--twitch);box-shadow:0 0 8px var(--twitch)}
-.nav-logo-dot.is-live-youtube{background:var(--red);box-shadow:0 0 8px var(--red)}
+.nav-logo-dot.is-live-twitch{background:#9147ff;box-shadow:0 0 8px #9147ff}
+.nav-logo-dot.is-live-youtube{background:#ff0033;box-shadow:0 0 8px #ff0033}
+.nav-logo-dot.is-live-kick{background:#53fc18;box-shadow:0 0 8px #53fc18}
+.nav-logo-dot.is-live-tiktok{background:#ffffff;box-shadow:0 0 8px rgba(255,255,255,.7)}
 .nav-links{display:flex;list-style:none;gap:0}
 .nav-links a{color:var(--muted3);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:0 1.2rem;line-height:56px;transition:color .15s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:0;left:1.2rem;right:1.2rem;height:2px;background:rgba(255,255,255,.7);transform:scaleX(0);transition:transform .2s;transform-origin:left}
@@ -398,7 +400,11 @@ footer span{color:var(--muted)}
 .scroll-fade-delay-3{transition-delay:.3s}
 
 /* ── PULSE ANIMÁCIÓ ─────────────────────────────── */
-.pulse-dot{display:block;width:8px;height:8px;border-radius:50%;background:#444;flex-shrink:0}
+.pulse-dot{display:block;width:10px;height:10px;border-radius:50%;background:#444;flex-shrink:0;transition:background .3s,box-shadow .3s}
+.pulse-dot.pulse-twitch{background:#9147ff;box-shadow:0 0 0 3px rgba(145,71,255,.25)}
+.pulse-dot.pulse-youtube{background:#ff0033;box-shadow:0 0 0 3px rgba(255,0,51,.25)}
+.pulse-dot.pulse-kick{background:#53fc18;box-shadow:0 0 0 3px rgba(83,252,24,.25)}
+.pulse-dot.pulse-tiktok{background:#ffffff;box-shadow:0 0 0 3px rgba(255,255,255,.2)}
 .pulse-twitch{background:#9147ff;animation:pulse-anim-twitch 1.4s ease-in-out infinite}
 .pulse-youtube{background:#ff0033;animation:pulse-anim-youtube 1.4s ease-in-out infinite}
 @keyframes pulse-anim-twitch{0%{box-shadow:0 0 0 0 rgba(145,71,255,.6)}70%{box-shadow:0 0 0 6px rgba(145,71,255,0)}100%{box-shadow:0 0 0 0 rgba(145,71,255,0)}}
@@ -459,6 +465,32 @@ footer span{color:var(--muted)}
 .popup-platform-link{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);text-decoration:none;color:var(--text);font-size:11px;font-weight:600;transition:background .15s}
 .popup-platform-link:hover{background:rgba(255,255,255,.09)}
 .popup-platform-link svg{flex-shrink:0}
+/* ── STREAMER CREW PANEL ────────────────────────── */
+#crew-tab{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:300;cursor:pointer;user-select:none}
+#crew-handle{background:rgba(18,18,18,0.95);border:1px solid rgba(255,255,255,0.1);border-right:none;border-radius:10px 0 0 10px;padding:12px 10px;color:var(--muted3);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(20px);transition:color .2s,border-color .2s,background .2s;box-shadow:-4px 0 24px rgba(0,0,0,.5)}
+#crew-handle:hover{color:var(--text);border-color:rgba(255,255,255,0.2);background:rgba(30,30,30,0.98)}
+#crew-panel{position:fixed;right:-310px;top:0;height:100vh;width:290px;background:rgba(8,8,8,0.98);backdrop-filter:blur(32px);border-left:1px solid rgba(255,255,255,0.08);box-shadow:-12px 0 50px rgba(0,0,0,.7);z-index:299;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column}
+#crew-panel.open{right:0}
+.crew-panel-head{padding:1.4rem 1.1rem 1rem;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;position:relative}
+.crew-eyebrow{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);margin-bottom:.35rem;display:flex;align-items:center;gap:6px}
+.crew-eyebrow::before{content:'';display:block;width:18px;height:1px;background:var(--muted)}
+.crew-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-.02em}
+.crew-close{position:absolute;top:14px;right:12px;width:28px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:var(--muted2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;line-height:1}
+.crew-close:hover{color:var(--text);border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.09)}
+.crew-list{padding:.8rem .8rem 2rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
+.crew-card{display:flex;align-items:center;gap:.85rem;padding:.7rem .85rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;text-decoration:none;color:var(--text);transition:background .2s,border-color .2s,transform .2s}
+.crew-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.13);transform:translateX(-3px)}
+.crew-avatar-wrap{position:relative;flex-shrink:0}
+.crew-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;background:var(--bg4);display:block;border:1.5px solid rgba(255,255,255,0.08)}
+.crew-avatar-fallback{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#2a1a4a,#1a1a3a);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#9147ff;border:1.5px solid rgba(145,71,255,0.3)}
+.crew-info{min-width:0;flex:1}
+.crew-name{font-size:.85rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.12rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crew-platform{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted2);letter-spacing:.05em;display:flex;align-items:center;gap:4px;text-transform:uppercase}
+.crew-arrow{color:var(--muted);flex-shrink:0;opacity:.5;transition:opacity .2s,transform .2s}
+.crew-card:hover .crew-arrow{opacity:1;transform:translateX(2px)}
+#crew-overlay{display:none;position:fixed;inset:0;z-index:298}
+#crew-overlay.open{display:block}
+
 </style>
 </head>
 <body>
@@ -492,7 +524,7 @@ footer span{color:var(--muted)}
     </div>
   </div>
 
-  <a href="https://kick.com/mrmooriss" target="_blank" class="stat-pill stat-pill-kick" style="text-decoration:none;">
+  <div class="stat-pill stat-pill-kick">
     <div class="stat-pill-icon">
       <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M2 2v20h4v-6l2 2 6 4h5l-8-8 8-8h-5l-6 4-2 2V2H2z"/></svg>
     </div>
@@ -500,7 +532,7 @@ footer span{color:var(--muted)}
       <div class="stat-pill-val" id="stat-kick-followers">–</div>
       <div class="stat-pill-key">Kick Követő</div>
     </div>
-  </a>
+  </div>
 
   <div class="stat-pill stat-pill-status">
     <div class="stat-pill-icon" id="stat-icon-status">
@@ -1034,7 +1066,7 @@ function renderEditor(){
         if(idx>=0){ pls.splice(idx,1); this.classList.remove('pl-on'); }
         else { pls.push(pl); this.classList.add('pl-on'); }
         schedule[i].platforms=pls;
-        save();renderDisplay();
+        save();renderDisplay();checkLive();
       });
     });
   });
@@ -1053,8 +1085,8 @@ function checkLive(){
     isLive=nowMin>=streamMin&&nowMin<streamMin+180;
   }
 
-  // Aktív platformok a menetrendből (vagy fallback LIVE_PLATFORM)
-  var platforms = (isLive && d.platforms && d.platforms.length) ? d.platforms : (isLive ? [LIVE_PLATFORM] : []);
+  // Aktív platformok a menetrendből
+  var platforms = (isLive && d.platforms && d.platforms.length) ? d.platforms : [];
   var isTwitch  = platforms.indexOf('twitch')  !== -1;
   var isYouTube = platforms.indexOf('youtube') !== -1;
   var isKick    = platforms.indexOf('kick')    !== -1;
@@ -1065,7 +1097,7 @@ function checkLive(){
     twitch:  { emoji:'🟣', label:'Twitch',  color:'#9147ff', shadow:'rgba(145,71,255,.5)', pillClass:'live-twitch',  dotClass:'is-live-twitch',  ringClass:'live-ring-twitch',  iconClass:'online-twitch'  },
     youtube: { emoji:'🔴', label:'YouTube', color:'#ff0033', shadow:'rgba(255,0,51,.5)',   pillClass:'live-youtube', dotClass:'is-live-youtube', ringClass:'live-ring-youtube', iconClass:'online-youtube' },
     kick:    { emoji:'🟢', label:'Kick',    color:'#53fc18', shadow:'rgba(83,252,24,.5)',  pillClass:'live-kick',    dotClass:'is-live-kick',    ringClass:'live-ring-kick',    iconClass:'online-kick'    },
-    tiktok:  { emoji:'⬛', label:'TikTok', color:'#ee1d52', shadow:'rgba(238,29,82,.5)',  pillClass:'live-tiktok',  dotClass:'is-live-tiktok',  ringClass:'live-ring-tiktok',  iconClass:'online-tiktok'  }
+    tiktok:  { emoji:'⬛', label:'TikTok', color:'#ffffff', shadow:'rgba(255,255,255,.4)', pillClass:'live-tiktok',  dotClass:'is-live-tiktok',  ringClass:'live-ring-tiktok',  iconClass:'online-tiktok'  }
   };
   // Az első aktív platform (nav dot / ring / ikon színéhez)
   var primaryPlat = platforms.length ? platforms[0] : null;
@@ -1091,17 +1123,25 @@ function checkLive(){
     var sp=ss.closest('.stat-pill');
     if(sp) sp.className='stat-pill stat-pill-status';
     if(isLive && platforms.length){
-      var labels=platforms.map(function(p){ var m=platformMeta[p]; return m ? m.emoji+' '+m.label : p; });
-      ss.textContent='LIVE – '+labels.map(function(p){ return p.split(' ')[1]; }).join(' & ');
+      var labels=platforms.map(function(p){ var m=platformMeta[p]; return m ? m.label : p; });
+      ss.textContent='LIVE – '+labels.join(' & ');
       if(pm){
         ss.style.color=pm.color;
         ss.style.textShadow='0 0 20px '+pm.shadow;
         if(sp) sp.classList.add(pm.pillClass);
       }
+      updatePulseDot(true, primaryPlat);
+    } else if(isLive){
+      // Élő de nincs platform kijelölve — szürke LIVE
+      ss.textContent='LIVE';
+      ss.style.color='#888';
+      ss.style.textShadow='';
+      updatePulseDot(false, null);
     } else {
       ss.textContent='Offline';
       ss.style.color='';
       ss.style.textShadow='';
+      updatePulseDot(false, null);
     }
   }
 
@@ -1372,9 +1412,8 @@ function updatePulseDot(isLive, platform){
   if(!dot) return;
   dot.className = 'pulse-dot';
   if(isLive){
-    if(platform==='twitch') dot.classList.add('pulse-twitch');
-    else if(platform==='youtube') dot.classList.add('pulse-youtube');
-    else dot.classList.add('pulse-live');
+    var cls = { twitch:'pulse-twitch', youtube:'pulse-youtube', kick:'pulse-kick', tiktok:'pulse-tiktok' };
+    dot.classList.add(cls[platform] || 'pulse-live');
   }
 }
 
@@ -1482,6 +1521,80 @@ function toggleHeart(btn){
   </div>
   <button class="welcome-close" onclick="closeWelcome()">×</button>
 </div>
+
+<!-- STREAMER CREW TAB -->
+<div id="crew-overlay" onclick="closeCrew()"></div>
+
+<div id="crew-tab" onclick="toggleCrew()">
+  <div id="crew-handle">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  </div>
+</div>
+
+<div id="crew-panel">
+  <div class="crew-panel-head">
+    <div class="crew-eyebrow">Ajánlott streamerek</div>
+    <div class="crew-title">Streamer Crew</div>
+    <button class="crew-close" onclick="closeCrew()">✕</button>
+  </div>
+  <div class="crew-list" id="crew-list"></div>
+</div>
+
+<script>
+// ── STREAMER CREW ─────────────────────────────────
+var CREW = [
+  { name: 'itsmemyllo', platform: 'twitch', url: 'https://www.twitch.tv/itsmemyllo' },
+  { name: 'krypfirst',  platform: 'twitch', url: 'https://www.twitch.tv/krypfirst'  }
+];
+
+var TWITCH_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>';
+
+function renderCrew(){
+  var list = document.getElementById('crew-list');
+  list.innerHTML = '';
+  CREW.forEach(function(s){
+    var initials = s.name.slice(0,2).toUpperCase();
+    var card = document.createElement('a');
+    card.className = 'crew-card';
+    card.href = s.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.innerHTML =
+      '<div class="crew-avatar-wrap">'
+        + '<div class="crew-avatar-fallback" id="crew-av-'+s.name+'">'+initials+'</div>'
+      + '</div>'
+      + '<div class="crew-info">'
+        + '<div class="crew-name">'+s.name+'</div>'
+        + '<div class="crew-platform">'+TWITCH_ICON+' Twitch</div>'
+      + '</div>'
+      + '<svg class="crew-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M9 18l6-6-6-6"/></svg>';
+    list.appendChild(card);
+
+    // Avatar betöltés Twitch-ről (CORS-barát proxy nélkül csak fallback)
+    var img = new Image();
+    img.onload = function(){
+      var wrap = document.getElementById('crew-av-'+s.name);
+      if(wrap){ var i=document.createElement('img'); i.src=this.src; i.className='crew-avatar'; wrap.replaceWith(i); }
+    };
+    img.src = 'https://unavatar.io/twitch/'+s.name;
+  });
+}
+
+var crewOpen = false;
+function toggleCrew(){ crewOpen ? closeCrew() : openCrew(); }
+function openCrew(){
+  crewOpen = true;
+  document.getElementById('crew-panel').classList.add('open');
+  document.getElementById('crew-overlay').classList.add('open');
+}
+function closeCrew(){
+  crewOpen = false;
+  document.getElementById('crew-panel').classList.remove('open');
+  document.getElementById('crew-overlay').classList.remove('open');
+}
+
+renderCrew();
+</script>
 
 </body>
 </html>
