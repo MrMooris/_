@@ -72,6 +72,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .stat-pill-status.live-youtube{border-color:#aa0022}
 .stat-pill-status.live-youtube .stat-pill-icon{color:#ff0033}
 .stat-pill-status.live-youtube .stat-pill-val{color:#ff4466}
+.stat-pill-status.live-kick{border-color:#2a7a00}
+.stat-pill-status.live-kick .stat-pill-icon{color:#53fc18}
+.stat-pill-status.live-kick .stat-pill-val{color:#7dff4a}
+.stat-pill-status.live-tiktok{border-color:#8a0028}
+.stat-pill-status.live-tiktok .stat-pill-icon{color:#ee1d52}
+.stat-pill-status.live-tiktok .stat-pill-val{color:#ff4d75}
 @media(max-width:700px){#stats-bar{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:400px){#stats-bar{grid-template-columns:repeat(1,1fr)}}
 
@@ -219,7 +225,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .stab{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg3);color:var(--muted2);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s}
 .stab:hover{color:var(--text);border-color:rgba(255,255,255,.12)}
 .stab.active-twitch{background:var(--twitch);color:#fff;border-color:var(--twitch);box-shadow:0 0 16px rgba(145,71,255,.25)}
-.stab.active-youtube{background:var(--red);color:#fff;
+.stab.active-youtube{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
 .stab.active-kick{background:#53fc18;color:#000;border-color:#53fc18;box-shadow:0 0 16px rgba(83,252,24,.3)}
 border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
 
@@ -360,12 +366,14 @@ footer span{color:var(--muted)}
 .pl-btn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:var(--text)}
 .pl-btn.pl-on.pl-twitch{background:rgba(145,71,255,.2);border-color:#9147ff;color:#9147ff;box-shadow:0 0 8px rgba(145,71,255,.3)}
 .pl-btn.pl-on.pl-youtube{background:rgba(255,0,51,.2);border-color:#ff0033;color:#ff0033;box-shadow:0 0 8px rgba(255,0,51,.3)}
+.pl-btn.pl-on.pl-kick{background:rgba(83,252,24,.15);border-color:#53fc18;color:#53fc18;box-shadow:0 0 8px rgba(83,252,24,.3)}
 .pl-btn.pl-on.pl-tiktok{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5);color:#fff;box-shadow:0 0 8px rgba(255,255,255,.2)}
 /* Menetrend display - platform ikonok */
 .day-platforms{display:flex;gap:4px;justify-content:center;margin-top:4px;flex-wrap:wrap}
 .day-platform-icon{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
 .day-pl-twitch{color:#9147ff}
 .day-pl-youtube{color:#ff0033}
+.day-pl-kick{color:#53fc18}
 .day-pl-tiktok{color:rgba(255,255,255,.7)}
 
 /* ── HEART BUTTON ───────────────────────────────── */
@@ -883,9 +891,10 @@ var LIVE_PLATFORM = 'twitch';
 var PLATFORM_ICONS = {
   twitch: '<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>',
   youtube: '<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
+  kick: '<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M3 2h4v7l5-7h5l-6 8 6 8h-5l-5-7v7H3z"/></svg>',
   tiktok: '<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.78a8.18 8.18 0 004.78 1.52V6.85a4.83 4.83 0 01-1.01-.16z"/></svg>'
 };
-var PLATFORM_COLORS = { twitch:'#9147ff', youtube:'#ff0033', tiktok:'#ffffff' };
+var PLATFORM_COLORS = { twitch:'#9147ff', youtube:'#ff0033', kick:'#53fc18', tiktok:'#ffffff' };
 var DEFAULT_SCHEDULE = [
   {active:false,time:'',platforms:[]},{active:true,time:'18:00',platforms:['twitch']},{active:true,time:'18:00',platforms:['twitch']},
   {active:true,time:'19:00',platforms:['twitch']},{active:false,time:'',platforms:[]},{active:true,time:'15:00',platforms:['twitch']},{active:true,time:'15:00',platforms:['twitch']}
@@ -1003,6 +1012,7 @@ function renderEditor(){
       +'<div class="platform-picker">'
         +'<button type="button" class="pl-btn pl-twitch'+(pls.indexOf('twitch')>=0?' pl-on':'')+'" data-pl="twitch" title="Twitch">'+PLATFORM_ICONS.twitch+'</button>'
         +'<button type="button" class="pl-btn pl-youtube'+(pls.indexOf('youtube')>=0?' pl-on':'')+'" data-pl="youtube" title="YouTube">'+PLATFORM_ICONS.youtube+'</button>'
+        +'<button type="button" class="pl-btn pl-kick'+(pls.indexOf('kick')>=0?' pl-on':'')+'" data-pl="kick" title="Kick">'+PLATFORM_ICONS.kick+'</button>'
         +'<button type="button" class="pl-btn pl-tiktok'+(pls.indexOf('tiktok')>=0?' pl-on':'')+'" data-pl="tiktok" title="TikTok">'+PLATFORM_ICONS.tiktok+'</button>'
       +'</div>';
     rows.appendChild(row);
@@ -1042,46 +1052,52 @@ function checkLive(){
     var nowMin=now.getHours()*60+now.getMinutes();
     isLive=nowMin>=streamMin&&nowMin<streamMin+180;
   }
-  var platform = isLive ? LIVE_PLATFORM : null;
-  var isTwitch  = platform==='twitch';
-  var isYouTube = platform==='youtube';
 
-  // Nav dot: szürke offline, lila twitch, piros youtube
+  // Aktív platformok a menetrendből (vagy fallback LIVE_PLATFORM)
+  var platforms = (isLive && d.platforms && d.platforms.length) ? d.platforms : (isLive ? [LIVE_PLATFORM] : []);
+  var isTwitch  = platforms.indexOf('twitch')  !== -1;
+  var isYouTube = platforms.indexOf('youtube') !== -1;
+  var isKick    = platforms.indexOf('kick')    !== -1;
+  var isTiktok  = platforms.indexOf('tiktok')  !== -1;
+
+  // Platform ikon+szín konfig
+  var platformMeta = {
+    twitch:  { emoji:'🟣', label:'Twitch',  color:'#9147ff', shadow:'rgba(145,71,255,.5)', pillClass:'live-twitch',  dotClass:'is-live-twitch',  ringClass:'live-ring-twitch',  iconClass:'online-twitch'  },
+    youtube: { emoji:'🔴', label:'YouTube', color:'#ff0033', shadow:'rgba(255,0,51,.5)',   pillClass:'live-youtube', dotClass:'is-live-youtube', ringClass:'live-ring-youtube', iconClass:'online-youtube' },
+    kick:    { emoji:'🟢', label:'Kick',    color:'#53fc18', shadow:'rgba(83,252,24,.5)',  pillClass:'live-kick',    dotClass:'is-live-kick',    ringClass:'live-ring-kick',    iconClass:'online-kick'    },
+    tiktok:  { emoji:'⬛', label:'TikTok', color:'#ee1d52', shadow:'rgba(238,29,82,.5)',  pillClass:'live-tiktok',  dotClass:'is-live-tiktok',  ringClass:'live-ring-tiktok',  iconClass:'online-tiktok'  }
+  };
+  // Az első aktív platform (nav dot / ring / ikon színéhez)
+  var primaryPlat = platforms.length ? platforms[0] : null;
+  var pm = primaryPlat ? platformMeta[primaryPlat] : null;
+
+  // Nav dot
   var dot=document.getElementById('nav-dot');
   dot.className='nav-logo-dot';
-  if(isLive){
-    dot.classList.add('is-live');
-    dot.classList.add(isTwitch ? 'is-live-twitch' : 'is-live-youtube');
-  }
+  if(isLive && pm){ dot.classList.add('is-live'); dot.classList.add(pm.dotClass); }
 
-  // Avatar ring szín
+  // Avatar ring
   var ar=document.getElementById('avatar-ring');
   ar.className='avatar-ring';
-  if(isLive){
-    ar.classList.add('live-ring');
-    ar.classList.add(isTwitch ? 'live-ring-twitch' : 'live-ring-youtube');
-  }
+  if(isLive && pm){ ar.classList.add('live-ring'); ar.classList.add(pm.ringClass); }
 
-  // Státusz ikon szín
+  // Státusz ikon
   var si=document.getElementById('stat-icon-status');
-  if(si){
-    si.className='stat-icon stat-icon-status';
-    if(isTwitch) si.classList.add('online-twitch');
-    else if(isYouTube) si.classList.add('online-youtube');
-  }
+  if(si){ si.className='stat-icon stat-icon-status'; if(pm) si.classList.add(pm.iconClass); }
 
-  // Státusz szöveg + szín
+  // Státusz szöveg — minden aktív platform felsorolva
   var ss=document.getElementById('stat-status');
   if(ss){
-    if(isTwitch){
-      ss.textContent='🟣 LIVE – Twitch';
-      ss.style.color='#9147ff';
-      ss.style.textShadow='0 0 20px rgba(145,71,255,.5)';
-      var spTW=ss.closest('.stat-pill');if(spTW)spTW.classList.add('live-twitch');
-    } else if(isYouTube){
-      ss.textContent='🔴 LIVE – YouTube';
-      ss.style.color='var(--red)';
-      ss.style.textShadow='0 0 20px rgba(255,0,51,.5)';
+    var sp=ss.closest('.stat-pill');
+    if(sp) sp.className='stat-pill stat-pill-status';
+    if(isLive && platforms.length){
+      var labels=platforms.map(function(p){ var m=platformMeta[p]; return m ? m.emoji+' '+m.label : p; });
+      ss.textContent='LIVE – '+labels.map(function(p){ return p.split(' ')[1]; }).join(' & ');
+      if(pm){
+        ss.style.color=pm.color;
+        ss.style.textShadow='0 0 20px '+pm.shadow;
+        if(sp) sp.classList.add(pm.pillClass);
+      }
     } else {
       ss.textContent='Offline';
       ss.style.color='';
@@ -1089,33 +1105,31 @@ function checkLive(){
     }
   }
 
-  // Live banner link
+  // Live banner link (első platform alapján)
   var lb=document.getElementById('live-banner');
   var bl=document.getElementById('banner-link');
   if(lb) lb.classList.toggle('show',isLive);
   if(bl){
-    if(isTwitch) bl.href='https://www.twitch.tv/'+TWITCH_NAME;
+    if(isTwitch)       bl.href='https://www.twitch.tv/'+TWITCH_NAME;
     else if(isYouTube) bl.href='https://www.youtube.com/@'+YT_HANDLE+'/live';
+    else if(isKick)    bl.href='https://kick.com/mrmooriss';
   }
 
   // Hero tag pötty
   var hd=document.getElementById('hero-live-dot');
   if(hd){
     hd.className='live-dot';
-    if(isLive){
-      hd.classList.add('is-live');
-      hd.classList.add(isTwitch ? 'is-live-twitch' : 'is-live-youtube');
-    }
+    if(isLive && pm){ hd.classList.add('is-live'); hd.classList.add(pm.dotClass); }
   }
 
   // Twitch gomb villogás
   var tb=document.getElementById('twitch-btn');
   if(tb) tb.classList.toggle('is-live',isTwitch);
 
-  // Stream offline/live state frissítés
+  // Stream player offline/live state
   setStreamLive('twitch',  isTwitch);
   setStreamLive('youtube', isYouTube);
-  setStreamLive('kick',    isLive && LIVE_PLATFORM==='kick');
+  setStreamLive('kick',    isKick);
 }
 
 // ── Admin ─────────────────────────────────────────
