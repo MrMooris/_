@@ -59,11 +59,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .stat-pill-body{display:flex;flex-direction:column;gap:1px}
 .stat-pill-val{font-family:'Space Mono',monospace;font-size:.85rem;font-weight:700;line-height:1;letter-spacing:-.02em;color:var(--text)}
 .stat-pill-key{font-size:8px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);line-height:1;margin-top:2px}
-.stat-pill-twitch .stat-pill-icon{color:#9147ff}
-.stat-pill-twitch{border-color:rgba(145,71,255,0.18)}
+.stat-pill-twitch .stat-pill-icon{color:rgba(255,255,255,0.3);transition:color .2s}
+.stat-pill-twitch{border-color:rgba(255,255,255,0.07);transition:border-color .2s,box-shadow .2s,transform .2s}
+.stat-pill-twitch:hover .stat-pill-icon{color:#9147ff}
 .stat-pill-twitch:hover{border-color:rgba(145,71,255,0.5);transform:translateY(-2px);box-shadow:0 0 14px rgba(145,71,255,0.3),0 0 2px rgba(145,71,255,0.5)}
-.stat-pill-kick .stat-pill-icon{color:#53fc18}
-.stat-pill-kick{border-color:rgba(83,252,24,0.15)}
+.stat-pill-kick .stat-pill-icon{color:rgba(255,255,255,0.3);transition:color .2s}
+.stat-pill-kick{border-color:rgba(255,255,255,0.07);transition:border-color .2s,box-shadow .2s,transform .2s}
+.stat-pill-kick:hover .stat-pill-icon{color:#53fc18}
 .stat-pill-kick:hover{border-color:rgba(83,252,24,0.45);transform:translateY(-2px);box-shadow:0 0 14px rgba(83,252,24,0.22),0 0 2px rgba(83,252,24,0.4)}
 .stat-pill-game .stat-pill-icon{color:var(--muted3)}
 .stat-pill-game{border-color:rgba(255,255,255,0.07)}
@@ -118,7 +120,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .section-heading{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:2.5rem;color:var(--text)}
 
 /* ── HERO ───────────────────────────────────────── */
-#sec-home{position:relative;overflow:hidden}
+
 .hero-bg{position:absolute;inset:0;z-index:0;background:var(--bg)}
 .hero-scanlines{position:absolute;inset:0;z-index:0;pointer-events:none;background:none;display:none}
 .hero-content{position:relative;z-index:1;min-height:calc(100vh - 56px - 80px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem}
@@ -139,14 +141,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .btn{display:inline-flex;align-items:center;gap:9px;padding:12px 22px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;text-decoration:none;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s;border-radius:12px}
 .btn:hover{transform:translateY(-2px)}
 .btn svg{width:16px;height:16px;flex-shrink:0}
-.btn-twitch{background:rgba(145,71,255,0.85);backdrop-filter:blur(8px);color:#fff;box-shadow:0 0 0 1px rgba(145,71,255,.4),inset 0 1px 0 rgba(255,255,255,.15)}
-.btn-twitch:hover{box-shadow:0 6px 24px rgba(145,71,255,.35)}
-.btn-youtube{background:rgba(255,34,68,0.85);backdrop-filter:blur(8px);color:#fff;box-shadow:0 0 0 1px rgba(255,34,68,.4),inset 0 1px 0 rgba(255,255,255,.15)}
-.btn-youtube:hover{box-shadow:0 6px 24px rgba(255,0,51,.4)}
-.btn-kick{background:#1a3a0d;color:#53fc18;box-shadow:0 0 0 1px rgba(83,252,24,.3),inset 0 1px 0 rgba(83,252,24,.1)}
-.btn-kick:hover{background:#224d10;box-shadow:0 0 16px rgba(83,252,24,.25)}
-.btn-tiktok{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);color:#fff;border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
-.btn-tiktok:hover{background:rgba(255,255,255,0.13);box-shadow:0 6px 24px rgba(255,255,255,.1)}
+.btn-twitch{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.1);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.btn-twitch:hover{background:rgba(145,71,255,0.85);color:#fff;border-color:rgba(145,71,255,.5);box-shadow:0 6px 24px rgba(145,71,255,.35)}
+.btn-youtube{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.1);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.btn-youtube:hover{background:rgba(255,34,68,0.85);color:#fff;border-color:rgba(255,34,68,.5);box-shadow:0 6px 24px rgba(255,0,51,.4)}
+.btn-kick{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.1);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.btn-kick:hover{background:#1a3a0d;color:#53fc18;border-color:rgba(83,252,24,.4);box-shadow:0 0 16px rgba(83,252,24,.25)}
+.btn-tiktok{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.1);transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.btn-tiktok:hover{background:rgba(255,255,255,0.13);color:#fff;border-color:rgba(255,255,255,.25);box-shadow:0 6px 24px rgba(255,255,255,.1)}
 .btn-twitch.is-live svg{animation:logo-blink .9s infinite}
 @keyframes logo-blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
 
@@ -183,11 +185,11 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 
 /* ── STREAM TABS ─────────────────────────────────── */
 .stream-tabs{display:flex;gap:6px;flex-shrink:0}
-.stab{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg3);color:var(--muted2);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .15s}
-.stab:hover{color:var(--text);border-color:rgba(255,255,255,.12)}
-.stab.active-twitch{background:var(--twitch);color:#fff;border-color:var(--twitch);box-shadow:0 0 16px rgba(145,71,255,.25)}
-.stab.active-youtube{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
-.stab.active-kick{background:#53fc18;color:#000;border-color:#53fc18;box-shadow:0 0 16px rgba(83,252,24,.3)}
+.stab{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.45);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.stab.active-twitch,.stab.active-youtube,.stab.active-kick{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.85);border-color:rgba(255,255,255,0.45);box-shadow:0 0 12px rgba(255,255,255,0.15),0 0 1px rgba(255,255,255,0.4)}
+#tab-twitch:hover{background:rgba(145,71,255,0.85);color:#fff;border-color:rgba(145,71,255,.6);box-shadow:0 0 16px rgba(145,71,255,.35)}
+#tab-youtube:hover{background:rgba(255,0,51,0.85);color:#fff;border-color:rgba(255,0,51,.6);box-shadow:0 0 16px rgba(255,0,51,.35)}
+#tab-kick:hover{background:#1a3a0d;color:#53fc18;border-color:rgba(83,252,24,.5);box-shadow:0 0 16px rgba(83,252,24,.25)}
 border-color:var(--red);box-shadow:0 0 16px rgba(255,0,51,.25)}
 
 /* ── RÓLAM ──────────────────────────────────────── */
@@ -502,9 +504,17 @@ footer span{color:var(--muted)}
 .clip-modal-title{font-size:.9rem;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .clip-modal-close{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--muted2);cursor:pointer;padding:6px 12px;font-size:12px;transition:all .15s;white-space:nowrap}
 .clip-modal-close:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+/* ── SCROLL PROGRESS BAR ── törléséhez: CSS + div#scroll-bar + JS scroll listener ── */
+#scroll-bar{position:fixed;top:0;left:0;height:1px;width:0%;background:#ffffff;z-index:9998;transition:width .08s linear;pointer-events:none}
+
 </style>
 </head>
 <body>
+<div id="scroll-bar"></div>
+  <div class="px-orb px-orb-1"></div>
+  <div class="px-orb px-orb-2"></div>
+  <div class="px-orb px-orb-3"></div>
+</div>
 
 <!-- TOP NAV -->
 <nav id="topnav">
@@ -1134,30 +1144,39 @@ function checkLive(){
   var si=document.getElementById('stat-icon-status');
   if(si){ si.className='stat-icon stat-icon-status'; if(pm) si.classList.add(pm.iconClass); }
 
-  // Státusz szöveg — minden aktív platform felsorolva
+  // Státusz szöveg - minden aktív platform felsorolva
   var ss=document.getElementById('stat-status');
   if(ss){
     var sp=ss.closest('.stat-pill');
     if(sp) sp.className='stat-pill stat-pill-status';
     if(isLive && platforms.length){
       var labels=platforms.map(function(p){ var m=platformMeta[p]; return m ? m.label : p; });
-      ss.textContent='LIVE – '+labels.join(' & ');
-      if(pm){
-        ss.style.color=pm.color;
-        ss.style.textShadow='0 0 20px '+pm.shadow;
-        if(sp) sp.classList.add(pm.pillClass);
+      ss.textContent='LIVE - '+labels.join(' & ');
+      // Szöveg színe = első platform
+      var firstPm = platformMeta[platforms[0]];
+      if(firstPm){
+        ss.style.color=firstPm.color;
+        ss.style.textShadow='none';
+        if(sp) sp.classList.add(firstPm.pillClass);
       }
-      updatePulseDot(true, primaryPlat);
+      // Neon fény = második platform (ha van), különben első
+      var glowPm = platforms.length >= 2 ? platformMeta[platforms[1]] : firstPm;
+      if(glowPm && sp){
+        sp.style.boxShadow='0 0 18px '+glowPm.shadow+', 0 0 6px '+glowPm.shadow;
+        sp.style.borderColor=glowPm.color.replace(')',',0.5)').replace('rgb','rgba');
+      }
+      updatePulseDot(true, platforms[0]);
     } else if(isLive){
-      // Élő de nincs platform kijelölve — szürke LIVE
       ss.textContent='LIVE';
       ss.style.color='#888';
       ss.style.textShadow='';
+      if(sp){ sp.style.boxShadow=''; sp.style.borderColor=''; }
       updatePulseDot(false, null);
     } else {
       ss.textContent='Offline';
       ss.style.color='';
       ss.style.textShadow='';
+      if(sp){ sp.style.boxShadow=''; sp.style.borderColor=''; }
       updatePulseDot(false, null);
     }
   }
@@ -1349,7 +1368,7 @@ function fetchCurrentGame(){
       if(game && game.trim() && game.toLowerCase() !== 'offline' && !game.includes('error') && !game.includes('No game')){
         el.textContent = game.trim();
       } else {
-        el.textContent = '–';
+        el.textContent = '-';
       }
     })
     .catch(function(){ });
@@ -1546,7 +1565,6 @@ function toggleHeart(btn){
   <div class="intro-inner">
     <div class="intro-bar"></div>
     <div class="intro-name" data-text="Mooris">Mooris</div>
-    <div class="intro-sub"></div>
   </div>
 </div>
 
@@ -1603,8 +1621,16 @@ function toggleHeart(btn){
 </div>
 
 <script>
-// ══════════════════════════════════════════════════
-// INTRO ANIMÁCIÓ — törléséhez: töröld az initIntro() hívást és ezt a funkciót
+// ── Scroll progress bar ──────────────────────────
+window.addEventListener('scroll',function(){
+  var el=document.getElementById('scroll-bar');
+  if(!el) return;
+  var s=document.documentElement;
+  var pct=(s.scrollTop||document.body.scrollTop)/(s.scrollHeight-s.clientHeight)*100;
+  el.style.width=Math.min(pct,100)+'%';
+},{ passive:true });
+
+ // - törléséhez: töröld az initIntro() hívást és ezt a funkciót
 // ══════════════════════════════════════════════════
 function initIntro(){
   var overlay = document.getElementById('intro-overlay');
@@ -1622,10 +1648,10 @@ function initIntro(){
 initIntro();
 
 // ══════════════════════════════════════════════════
-// CLIP GALÉRIA — törléséhez: töröld a CLIPS tömböt és a clips* funkciókat
+// CLIP GALÉRIA - törléséhez: töröld a CLIPS tömböt és a clips* funkciókat
 // ══════════════════════════════════════════════════
 var CLIPS = [
-  // Twitch clip példa — cseréld le a saját clip ID-dra
+  // Twitch clip példa - cseréld le a saját clip ID-dra
   // { title: 'Clip neve', platform: 'twitch', embedId: 'TWITCH_CLIP_ID', thumb: '', duration: '0:42' },
   // YouTube clip példa
   // { title: 'Clip neve', platform: 'youtube', embedId: 'YOUTUBE_VIDEO_ID', thumb: '', duration: '1:15' },
